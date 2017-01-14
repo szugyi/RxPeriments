@@ -1,0 +1,18 @@
+group 'com.github.szugyi'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "com.github.szugyi.rxperiments.Main"
+sourceCompatibility = 1.6
+
+repositories {
+    mavenCentral()
+}
+
+defaultTasks 'clean', 'run'
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
