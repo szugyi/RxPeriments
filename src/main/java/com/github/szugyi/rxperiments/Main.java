@@ -1,6 +1,6 @@
 package com.github.szugyi.rxperiments;
 
-import java.io.IOException;
+import io.reactivex.Observable;
 
 /**
  * Created by szugyi on 14/01/17.
@@ -8,5 +8,6 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        Observable.just("Hello RxWorld!").subscribe(System.out::println);
     }
 }
