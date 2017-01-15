@@ -1,5 +1,6 @@
 package com.github.szugyi.rxperiments.service;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import javafx.util.Pair;
@@ -17,4 +18,6 @@ public interface IService {
     Observable<Pair<Integer, String>> getStringWithProgress();
 
     Observable<String> getStringFromUi();
+
+    Observable<String> getThreadName();
 }

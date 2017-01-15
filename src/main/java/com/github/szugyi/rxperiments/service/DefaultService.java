@@ -4,6 +4,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import javafx.util.Pair;
 
+import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 import static com.github.szugyi.rxperiments.utils.TimeUtils.logStart;
 import static com.github.szugyi.rxperiments.utils.TimeUtils.sleep;
 
@@ -57,26 +58,30 @@ public class DefaultService implements IService {
 
     private String uiString = "Oh God this string is long!";
     //                              O   h  ' '  G   o   d  ' ' t   h   i   s  ' '  s   t  r   i   n   g  ' '  i   s  ' ' l   o   n   g   !
-    private int[] typingPattern = { 10, 13, 20, 45, 21, 6, 18, 68, 23, 31, 12, 25, 76, 9, 19, 22, 36, 14, 37, 12, 19, 8, 59, 17, 21, 20, 91 };
+    private int[] typingPattern = {10, 13, 20, 45, 21, 6, 18, 68, 23, 31, 12, 25, 76, 9, 19, 22, 36, 14, 37, 12, 19, 8, 59, 17, 21, 20, 91};
 
     @Override
     public Observable<String> getStringFromUi() {
         return Observable.create(subscriber -> {
-            try {
-                StringBuilder sb = new StringBuilder(typingPattern.length);
-                int i = 0;
-                for (int pause : typingPattern) {
-                    sleep(pause);
-                    sb.append(uiString.charAt(i));
-                    subscriber.onNext(sb.toString());
-                    i++;
-                }
-                subscriber.onComplete();
-            } catch (Exception e) {
-                subscriber.onError(e);
+            StringBuilder sb = new StringBuilder(typingPattern.length);
+            int i = 0;
+            for (int pause : typingPattern) {
+                sleep(pause);
+                sb.append(uiString.charAt(i));
+                subscriber.onNext(sb.toString());
+                i++;
             }
+            subscriber.onComplete();
         });
     }
 
-
+    @Override
+    public Observable<String> getThreadName() {
+        return Observable.create(subscriber -> {
+            String threadName = Thread.currentThread().getName();
+            log("Observable run on: " + threadName);
+            subscriber.onNext(threadName);
+            subscriber.onComplete();
+        });
+    }
 }
