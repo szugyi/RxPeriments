@@ -1,13 +1,7 @@
 package com.github.szugyi.rxperiments.experiment;
 
 import com.github.szugyi.rxperiments.utils.SchedulerUtils;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import javafx.util.Pair;
-import org.reactivestreams.Subscriber;
 
-import static com.github.szugyi.rxperiments.utils.TimeUtils.sleep;
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 
 /**
