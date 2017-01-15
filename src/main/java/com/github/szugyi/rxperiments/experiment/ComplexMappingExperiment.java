@@ -1,11 +1,13 @@
 package com.github.szugyi.rxperiments.experiment;
 
+import com.github.szugyi.rxperiments.utils.SchedulerUtils;
 import io.reactivex.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
+import static com.github.szugyi.rxperiments.utils.SchedulerUtils.applySchedulers;
 
 /**
  * Created by szugyiczkicsaba on 15/01/17.
@@ -15,6 +17,7 @@ public class ComplexMappingExperiment implements IExperiment {
     @Override
     public void run() {
         Observable.fromIterable(createData())
+                .compose(applySchedulers())
                 .flatMap(a ->
                         Observable.fromIterable(a.getB())
                             .filter(b -> b.isC())

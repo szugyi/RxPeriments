@@ -1,7 +1,6 @@
 package com.github.szugyi.rxperiments.service;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
 import javafx.util.Pair;
 
@@ -42,9 +41,9 @@ public class DefaultService implements IService {
 
     @Override
     public Observable<Pair<Integer, String>> getStringWithProgress() {
-        return Observable.create((ObservableOnSubscribe<Pair<Integer, String>>) subscriber -> {
+        return Observable.create(subscriber -> {
             try {
-                for (int i = 1; i <= 10; i++ ){
+                for (int i = 1; i <= 10; i++) {
                     sleep(200);
                     subscriber.onNext(new Pair<>(i * 10, null));
                 }
