@@ -1,7 +1,9 @@
 package com.github.szugyi.rxperiments.service;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
+import javafx.util.Pair;
 
 import static com.github.szugyi.rxperiments.utils.TimeUtils.logStart;
 import static com.github.szugyi.rxperiments.utils.TimeUtils.sleep;
@@ -35,6 +37,22 @@ public class DefaultService implements IService {
             logStart();
             sleep();
             return Single.just(1);
+        });
+    }
+
+    @Override
+    public Observable<Pair<Integer, String>> getStringWithProgress() {
+        return Observable.create((ObservableOnSubscribe<Pair<Integer, String>>) subscriber -> {
+            try {
+                for (int i = 1; i <= 10; i++ ){
+                    sleep(200);
+                    subscriber.onNext(new Pair<>(i * 10, null));
+                }
+                subscriber.onNext(new Pair<>(-1, "A String, created with tons of computation"));
+                subscriber.onComplete();
+            } catch (Exception e) {
+                subscriber.onError(e);
+            }
         });
     }
 

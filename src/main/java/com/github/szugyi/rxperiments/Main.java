@@ -2,6 +2,7 @@ package com.github.szugyi.rxperiments;
 
 import com.github.szugyi.rxperiments.experiment.IExperiment;
 import com.github.szugyi.rxperiments.experiment.ObservableExperiment;
+import com.github.szugyi.rxperiments.experiment.ProgressExperiment;
 import com.github.szugyi.rxperiments.service.DefaultService;
 import com.github.szugyi.rxperiments.service.IService;
 import com.github.szugyi.rxperiments.utils.TimeUtils;
@@ -19,7 +20,7 @@ import static com.github.szugyi.rxperiments.utils.SchedulerUtils.applySingleSche
  * Created by szugyi on 14/01/17.
  */
 public class Main {
-    private static IExperiment experiment = new ObservableExperiment();
+    private static IExperiment experiment = new ProgressExperiment();
 
     public static void main(String[] args) throws IOException {
         System.out.println("Hello World!");
