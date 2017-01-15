@@ -1,6 +1,5 @@
 package com.github.szugyi.rxperiments.experiment;
 
-import com.github.szugyi.rxperiments.utils.SchedulerUtils;
 import io.reactivex.Observable;
 
 import java.util.ArrayList;
@@ -20,9 +19,9 @@ public class ComplexMappingExperiment implements IExperiment {
                 .compose(applySchedulers())
                 .flatMap(a ->
                         Observable.fromIterable(a.getB())
-                            .filter(b -> b.isC())
-                            .map(b -> a.getD())
-                            .distinct()
+                                .filter(b -> b.isC())
+                                .map(b -> a.getD())
+                                .distinct()
                 )
                 .subscribe(d -> {
                     log("Result came from: " + d);

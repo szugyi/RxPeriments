@@ -15,4 +15,6 @@ public interface IService {
     Single<Integer> getSingleNumber();
 
     Observable<Pair<Integer, String>> getStringWithProgress();
+
+    Observable<String> getStringFromUi();
 }
