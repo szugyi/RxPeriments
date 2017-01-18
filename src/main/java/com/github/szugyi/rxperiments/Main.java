@@ -18,7 +18,7 @@ import static com.github.szugyi.rxperiments.utils.SchedulerUtils.applySingleSche
  * Created by szugyi on 14/01/17.
  */
 public class Main {
-    private static IExperiment experiment = new SchedulerExperiment();
+    private static IExperiment experiment = new ComposeExperiment();
 
     public static void main(String[] args) throws IOException {
         System.out.println("Hello World!");
