@@ -16,24 +16,31 @@ public class ComposeExperiment implements IExperiment {
     @Override
     public void run() {
         service.getThreadName()
-                .compose(new LoggingTransformer())
+                .compose(new LoggingTransformer("Transformer 1"))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.io())
-                .compose(new LoggingTransformer())
+                .compose(new LoggingTransformer("Transformer 2"))
                 .subscribeOn(Schedulers.io())
-                .compose(new LoggingTransformer())
                 .observeOn(Schedulers.computation())
+                .compose(new LoggingTransformer("Transformer 3"))
                 .subscribe(thread -> {
-                    log("onNext was on: " + Thread.currentThread().getName());
+                    log("onNext run on: " + Thread.currentThread().getName());
                 });
     }
 
     private static class LoggingTransformer implements ObservableTransformer {
+        private String name;
+
+        public LoggingTransformer(String name) {
+            this.name = name;
+        }
+
         @Override
         public ObservableSource apply(Observable upstream) {
-            String threadName = Thread.currentThread().getName();
-            log("Compose run on: " + threadName);
-            return upstream;
+            log(name + " apply run on: " + Thread.currentThread().getName());
+            return upstream.doOnNext(o -> {
+                log(name + " onNext run on: " + Thread.currentThread().getName());
+            });
         }
     }
 }
