@@ -4,9 +4,6 @@ import com.github.szugyi.rxperiments.utils.SchedulerUtils;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 
-/**
- * Created by szugyiczkicsaba on 15/01/17.
- */
 public class ProgressExperiment implements IExperiment {
 
     @Override

@@ -5,9 +5,6 @@ import com.github.szugyi.rxperiments.utils.TimeUtils;
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 import static com.github.szugyi.rxperiments.utils.SchedulerUtils.applySingleSchedulers;
 
-/**
- * Created by szugyiczkicsaba on 15/01/17.
- */
 public class SingleExperiment implements IExperiment {
 
     @Override

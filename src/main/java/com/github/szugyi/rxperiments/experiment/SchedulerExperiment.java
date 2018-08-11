@@ -5,9 +5,6 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 
-/**
- * Created by szugyiczkicsaba on 15/01/17.
- */
 public class SchedulerExperiment implements IExperiment {
 
     @Override

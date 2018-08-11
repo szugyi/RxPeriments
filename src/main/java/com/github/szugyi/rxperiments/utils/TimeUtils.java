@@ -3,9 +3,6 @@ package com.github.szugyi.rxperiments.utils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Created by szugyiczkicsaba on 15/01/17.
- */
 public class TimeUtils {
     private static DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm:ss.S");
 

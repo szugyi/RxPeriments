@@ -20,9 +20,9 @@ public class ComposeExperiment implements IExperiment {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.io())
                 .compose(new LoggingTransformer("Transformer 2"))
-                .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .compose(new LoggingTransformer("Transformer 3"))
+                .subscribeOn(Schedulers.io())
                 .subscribe(thread -> {
                     log("onNext run on: " + Thread.currentThread().getName());
                 });
