@@ -4,17 +4,19 @@ import com.github.szugyi.rxperiments.utils.LogUtils;
 import com.github.szugyi.rxperiments.utils.SchedulerUtils;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 import java.util.concurrent.TimeUnit;
 
-public class DisposableExperiment implements IExperiment {
+public class DisposableExperiment implements Experiment {
     private Disposable disposable;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     @Override
     public void run() {
         disposable = Flowable.range(1, 10)
-                .compose(SchedulerUtils.applyFlowableSchedulers())
+                .compose(SchedulerUtils.applySchedulers())
 //                .concatMap(i-> Flowable.just(i).delay(500, TimeUnit.MILLISECONDS))
                 .map(value -> {
                     try {
@@ -27,9 +29,9 @@ public class DisposableExperiment implements IExperiment {
                 })
                 .subscribe(LogUtils::log);
 
-        Completable.complete()
+        disposables.add(Completable.complete()
                 .delay(3, TimeUnit.SECONDS)
-                .subscribe(this::stopExperiment);
+                .subscribe(this::stopExperiment));
     }
 
     private void stopExperiment() {

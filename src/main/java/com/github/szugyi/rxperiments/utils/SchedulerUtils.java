@@ -1,17 +1,11 @@
 package com.github.szugyi.rxperiments.utils;
 
 import io.reactivex.FlowableTransformer;
-import io.reactivex.ObservableTransformer;
 import io.reactivex.SingleTransformer;
 import io.reactivex.schedulers.Schedulers;
 
 public class SchedulerUtils {
-    public static <T> ObservableTransformer<T, T> applySchedulers() {
-        return observable -> observable.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.single());
-    }
-
-    public static <T> FlowableTransformer<T, T> applyFlowableSchedulers() {
+    public static <T> FlowableTransformer<T, T> applySchedulers() {
         return flowable -> flowable.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.single());
     }

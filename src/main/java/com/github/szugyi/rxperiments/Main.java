@@ -1,12 +1,12 @@
 package com.github.szugyi.rxperiments;
 
-import com.github.szugyi.rxperiments.experiment.DisposableExperiment;
-import com.github.szugyi.rxperiments.experiment.IExperiment;
+import com.github.szugyi.rxperiments.experiment.BackpressureExperiment;
+import com.github.szugyi.rxperiments.experiment.Experiment;
 
 import java.io.IOException;
 
 public class Main {
-    private static IExperiment experiment = new DisposableExperiment();
+    private static Experiment experiment = new BackpressureExperiment();
 
     public static void main(String[] args) throws IOException {
         System.out.println();

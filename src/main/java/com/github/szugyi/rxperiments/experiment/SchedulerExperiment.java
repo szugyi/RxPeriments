@@ -1,15 +1,15 @@
 package com.github.szugyi.rxperiments.experiment;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 
-public class SchedulerExperiment implements IExperiment {
+public class SchedulerExperiment implements Experiment {
 
     @Override
     public void run() {
-        Observable.zip(service.getThreadName()
+        Flowable.zip(service.getThreadName()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.single())
                 .doOnNext(thread -> {

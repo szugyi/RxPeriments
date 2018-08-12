@@ -5,7 +5,7 @@ import com.github.szugyi.rxperiments.utils.TimeUtils;
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 import static com.github.szugyi.rxperiments.utils.SchedulerUtils.applySingleSchedulers;
 
-public class SingleExperiment implements IExperiment {
+public class SingleExperiment implements Experiment {
 
     @Override
     public void run() {

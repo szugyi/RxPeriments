@@ -1,23 +1,23 @@
 package com.github.szugyi.rxperiments.experiment;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 import java.util.concurrent.TimeUnit;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 import static com.github.szugyi.rxperiments.utils.SchedulerUtils.applySchedulers;
 
-public class DebounceExperiment implements IExperiment {
+public class DebounceExperiment implements Experiment {
 
     @Override
     public void run() {
-        Observable.concat(getStringFromUiWithDebounce(5),
+        Flowable.concat(getStringFromUiWithDebounce(5),
                 getStringFromUiWithDebounce(50),
                 getStringFromUiWithDebounce(500))
                 .subscribe();
     }
 
-    private Observable getStringFromUiWithDebounce(int millis) {
+    private Flowable<String> getStringFromUiWithDebounce(int millis) {
         return service.getStringFromUi()
                 .compose(applySchedulers())
                 .debounce(millis, TimeUnit.MILLISECONDS)

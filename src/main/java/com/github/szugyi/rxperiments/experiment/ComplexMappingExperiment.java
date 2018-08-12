@@ -1,6 +1,6 @@
 package com.github.szugyi.rxperiments.experiment;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +8,14 @@ import java.util.List;
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 import static com.github.szugyi.rxperiments.utils.SchedulerUtils.applySchedulers;
 
-public class ComplexMappingExperiment implements IExperiment {
+public class ComplexMappingExperiment implements Experiment {
 
     @Override
     public void run() {
-        Observable.fromIterable(createData())
+        Flowable.fromIterable(createData())
                 .compose(applySchedulers())
                 .flatMap(a ->
-                        Observable.fromIterable(a.getB())
+                        Flowable.fromIterable(a.getB())
                                 .filter(b -> b.isC())
                                 .map(b -> a.getD())
                                 .distinct()

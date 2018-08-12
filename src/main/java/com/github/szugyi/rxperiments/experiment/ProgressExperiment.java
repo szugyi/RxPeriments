@@ -4,7 +4,7 @@ import com.github.szugyi.rxperiments.utils.SchedulerUtils;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 
-public class ProgressExperiment implements IExperiment {
+public class ProgressExperiment implements Experiment {
 
     @Override
     public void run() {

@@ -4,7 +4,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.internal.functions.ObjectHelper;
 
-public class NullExperiment implements IExperiment {
+public class NullExperiment implements Experiment {
 
     @Override
     public void run() {

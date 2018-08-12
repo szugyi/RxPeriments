@@ -1,16 +1,16 @@
 package com.github.szugyi.rxperiments.experiment;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableTransformer;
 import io.reactivex.schedulers.Schedulers;
+import org.reactivestreams.Publisher;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 
 /**
  * Created by szugyi on 17/01/17.
  */
-public class ComposeExperiment implements IExperiment {
+public class ComposeExperiment implements Experiment {
 
 
     @Override
@@ -28,7 +28,7 @@ public class ComposeExperiment implements IExperiment {
                 });
     }
 
-    private static class LoggingTransformer implements ObservableTransformer {
+    private static class LoggingTransformer implements FlowableTransformer {
         private String name;
 
         public LoggingTransformer(String name) {
@@ -36,7 +36,7 @@ public class ComposeExperiment implements IExperiment {
         }
 
         @Override
-        public ObservableSource apply(Observable upstream) {
+        public Publisher apply(Flowable upstream) {
             log(name + " apply run on: " + Thread.currentThread().getName());
             return upstream.doOnNext(o -> {
                 log(name + " onNext run on: " + Thread.currentThread().getName());

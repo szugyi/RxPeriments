@@ -1,10 +1,10 @@
 package com.github.szugyi.rxperiments.experiment;
 
 import com.github.szugyi.rxperiments.service.DefaultService;
-import com.github.szugyi.rxperiments.service.IService;
+import com.github.szugyi.rxperiments.service.Service;
 
-public interface IExperiment {
-    IService service = new DefaultService();
+public interface Experiment {
+    Service service = new DefaultService();
 
     void run();
 }
