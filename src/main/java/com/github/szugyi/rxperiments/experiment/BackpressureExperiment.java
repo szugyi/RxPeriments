@@ -12,7 +12,7 @@ public class BackpressureExperiment implements Experiment {
     @Override
     public void run() {
         Observable.interval(1, TimeUnit.MILLISECONDS)
-                .toFlowable(BackpressureStrategy.LATEST)
+                .toFlowable(BackpressureStrategy.DROP)
                 .observeOn(Schedulers.single())
                 .subscribe(value -> {
                     Thread.sleep(50);

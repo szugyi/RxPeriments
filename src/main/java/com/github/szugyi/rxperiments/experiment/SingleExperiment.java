@@ -1,19 +1,18 @@
 package com.github.szugyi.rxperiments.experiment;
 
-import com.github.szugyi.rxperiments.utils.TimeUtils;
-
-import static com.github.szugyi.rxperiments.utils.LogUtils.log;
-import static com.github.szugyi.rxperiments.utils.SchedulerUtils.applySingleSchedulers;
+import com.github.szugyi.rxperiments.service.SampleApi;
 
 public class SingleExperiment implements Experiment {
 
+    private final SampleApi apiClient = new SampleApi();
+
     @Override
     public void run() {
-        service.getSingleNumber()
-                .compose(applySingleSchedulers())
-                .subscribe(number -> {
-                    TimeUtils.logEnd();
-                    log("Result is: " + number);
+        apiClient.getProfile()
+                .subscribe(profileData -> {
+                    // Profile data loaded successfully
+                }, throwable -> {
+                    // Error happened during loading profile data
                 });
     }
 }
