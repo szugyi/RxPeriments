@@ -14,7 +14,7 @@ public class TimeUtils {
         log("Ended");
     }
 
-    private static void log(String prefix){
+    public static void log(String prefix){
         LocalDateTime date = LocalDateTime.now();
         LogUtils.log(prefix + " at: " + date.format(format));
     }

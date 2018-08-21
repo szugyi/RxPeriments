@@ -3,16 +3,18 @@ package com.github.szugyi.rxperiments.experiment;
 import com.github.szugyi.rxperiments.utils.LogUtils;
 import com.github.szugyi.rxperiments.utils.TimeUtils;
 import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
+import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class StreamCreationExperiment implements Experiment {
-
 
     @Override
     public void run() {
@@ -60,14 +62,33 @@ public class StreamCreationExperiment implements Experiment {
 
         LogUtils.log("\n\n");
 
-        Flowable updateInterval = Flowable.interval(1, TimeUnit.SECONDS);
-
         Flowable.fromCallable(this::getRandomValue)
-                .repeatWhen(completed -> completed.zipWith(updateInterval, (item, event) -> item))
+                .repeatWhen(new Function<Flowable<Object>, Publisher<?>>() {
+                    @Override
+                    public Publisher<?> apply(Flowable<Object> completedFlowable) throws Exception {
+                        Flowable updateInterval = Flowable.interval(1, TimeUnit.SECONDS)
+                                .doOnNext(interval -> LogUtils.log("interval: " + interval));
+
+                        return completedFlowable
+                                .doOnNext(object -> LogUtils.log("onNext: " + object.toString()))
+                                .zipWith(updateInterval, (item, event) -> {
+                                    LogUtils.log("item: " + item + ", event: " + event);
+                                    return item;
+                                });
+                    }
+                })
                 .subscribe(new LoggingSubscriber());
+
+        List<String> words = Arrays.asList("the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog");
+
+        Flowable.fromIterable(words)
+                .zipWith(Flowable.range(1, Integer.MAX_VALUE),
+                        (string, count) -> String.format("%2d. %s", count, string))
+                .subscribe(LogUtils::log);
     }
 
     private Integer getRandomValue() {
+        TimeUtils.sleep(3000);
         LogUtils.log("new random value requested");
         return new Random().nextInt();
     }
