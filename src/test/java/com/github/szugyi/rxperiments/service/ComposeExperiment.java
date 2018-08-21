@@ -1,20 +1,17 @@
-package com.github.szugyi.rxperiments.experiment;
+package com.github.szugyi.rxperiments.service;
 
 import io.reactivex.Flowable;
 import io.reactivex.FlowableTransformer;
 import io.reactivex.schedulers.Schedulers;
+import org.junit.Test;
 import org.reactivestreams.Publisher;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 
-/**
- * Created by szugyi on 17/01/17.
- */
-public class ComposeExperiment implements Experiment {
+public class ComposeExperiment extends BaseExperiment {
 
-
-    @Override
-    public void run() {
+    @Test
+    public void composeExperiment() throws Exception {
         service.getThreadName()
                 .compose(new LoggingTransformer("Transformer 1"))
                 .subscribeOn(Schedulers.computation())
@@ -26,6 +23,8 @@ public class ComposeExperiment implements Experiment {
                 .subscribe(thread -> {
                     log("onNext run on: " + Thread.currentThread().getName());
                 });
+
+        System.in.read();
     }
 
     private static class LoggingTransformer implements FlowableTransformer {

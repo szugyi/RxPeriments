@@ -1,15 +1,14 @@
-package com.github.szugyi.rxperiments.experiment;
+package com.github.szugyi.rxperiments.service;
 
 import com.github.szugyi.rxperiments.utils.LogUtils;
 import io.reactivex.schedulers.Schedulers;
+import org.junit.Test;
 
 
-public class SchedulerExperiment implements Experiment {
+public class SchedulerExperiment extends BaseExperiment {
 
-    @Override
-    public void run() {
-
-
+    @Test
+    public void schedulerExperiment() throws Exception {
         service.getThreadName()
                 .subscribeOn(Schedulers.computation())
                 .doOnNext(ignored -> LogUtils.log("First onNext run on: " + Thread.currentThread().getName()))
@@ -21,7 +20,6 @@ public class SchedulerExperiment implements Experiment {
                 .doOnNext(ignored -> LogUtils.log("Third onNext run on:" + Thread.currentThread().getName()))
                 .subscribe(ignored -> LogUtils.log("Subscribe consumer run on:" + Thread.currentThread().getName()));
 
-
-
+        System.in.read();
     }
 }

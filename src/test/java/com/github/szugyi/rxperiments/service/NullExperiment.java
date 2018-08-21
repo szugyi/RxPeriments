@@ -1,13 +1,14 @@
-package com.github.szugyi.rxperiments.experiment;
+package com.github.szugyi.rxperiments.service;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.internal.functions.ObjectHelper;
+import org.junit.Test;
 
-public class NullExperiment implements Experiment {
+public class NullExperiment extends BaseExperiment {
 
-    @Override
-    public void run() {
+    @Test
+    public void nullExperiment() throws Exception {
         Object nonNullValue = ObjectHelper.requireNonNull(null, "Object was null");
 
         Observable.just(null);
@@ -19,5 +20,7 @@ public class NullExperiment implements Experiment {
 
         Observable.just(1).map(v -> null)
                 .subscribe(System.out::println, Throwable::printStackTrace);
+
+        System.in.read();
     }
 }

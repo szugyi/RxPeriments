@@ -1,20 +1,23 @@
-package com.github.szugyi.rxperiments.experiment;
+package com.github.szugyi.rxperiments.service;
 
 import io.reactivex.Flowable;
+import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 import static com.github.szugyi.rxperiments.utils.SchedulerUtils.applySchedulers;
 
-public class DebounceExperiment implements Experiment {
+public class DebounceExperiment extends BaseExperiment {
 
-    @Override
-    public void run() {
+    @Test
+    public void debounceExperiment() throws Exception {
         Flowable.concat(getStringFromUiWithDebounce(5),
                 getStringFromUiWithDebounce(50),
                 getStringFromUiWithDebounce(500))
                 .subscribe();
+
+        System.in.read();
     }
 
     private Flowable<String> getStringFromUiWithDebounce(int millis) {

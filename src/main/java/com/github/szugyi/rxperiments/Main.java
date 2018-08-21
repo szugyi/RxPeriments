@@ -1,19 +1,10 @@
 package com.github.szugyi.rxperiments;
 
-import com.github.szugyi.rxperiments.experiment.*;
-import io.reactivex.plugins.RxJavaPlugins;
-
-import java.io.IOException;
+import com.github.szugyi.rxperiments.utils.LogUtils;
 
 public class Main {
-    private static Experiment experiment = new SchedulerExperiment();
 
-    public static void main(String[] args) throws IOException {
-        System.out.println();
-        RxJavaPlugins.setErrorHandler(e -> { });
-
-        experiment.run();
-
-        System.in.read();
+    public static void main(String[] args) {
+        LogUtils.log("Run the tests");
     }
 }

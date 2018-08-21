@@ -1,67 +1,76 @@
-package com.github.szugyi.rxperiments.experiment;
+package com.github.szugyi.rxperiments.service;
 
+import com.github.szugyi.rxperiments.LoggingSubscriber;
 import com.github.szugyi.rxperiments.utils.LogUtils;
 import com.github.szugyi.rxperiments.utils.TimeUtils;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
+import org.junit.Test;
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class StreamCreationExperiment implements Experiment {
+public class StreamCreationExperiment extends BaseExperiment {
 
-    @Override
-    public void run() {
+    @Test
+    public void emptyTest() {
         Flowable.empty()
                 .subscribe(new LoggingSubscriber());
+    }
 
-        LogUtils.log("\n\n");
-
+    @Test
+    public void justTest() {
         Flowable.just(1)
                 .subscribe(new LoggingSubscriber());
+    }
 
-        LogUtils.log("\n\n");
-
+    @Test
+    public void fromIterableTest() {
         List<Integer> integerList = Arrays.asList(1, 3, 5, 7, 9);
         Flowable.fromIterable(integerList)
                 .subscribe(new LoggingSubscriber());
+    }
 
-        LogUtils.log("\n\n");
-
+    @Test
+    public void fromArrayTest() {
         Integer[] intArray = new Integer[]{1, 3, 5, 7, 9};
         Flowable.fromArray(intArray)
                 .subscribe(new LoggingSubscriber());
+    }
 
-        LogUtils.log("\n\n");
-
+    @Test
+    public void rangeTest() {
         Flowable.range(1, 10)
                 .subscribe(new LoggingSubscriber());
+    }
 
-        LogUtils.log("\n\n");
-
+    @Test
+    public void wrongJustTest() {
         Flowable<Integer> randomFlowableJust = Flowable.just(getRandomValue());
         TimeUtils.sleep();
         randomFlowableJust.subscribe(new LoggingSubscriber());
+    }
 
-        LogUtils.log("\n\n");
-
+    @Test
+    public void fromCallableTest() {
         Flowable<Integer> randomFlowableCallable = Flowable.fromCallable(this::getRandomValue);
         TimeUtils.sleep();
         randomFlowableCallable.subscribe(new LoggingSubscriber());
+    }
 
-        LogUtils.log("\n\n");
-
+    @Test
+    public void intervalTest() throws Exception {
         Flowable.interval(1, TimeUnit.SECONDS)
                 .subscribe(new LoggingSubscriber());
 
-        LogUtils.log("\n\n");
+        System.in.read();
+    }
 
+    @Test
+    public void repeatWhenTest() throws Exception {
         Flowable.fromCallable(this::getRandomValue)
                 .repeatWhen(new Function<Flowable<Object>, Publisher<?>>() {
                     @Override
@@ -79,6 +88,11 @@ public class StreamCreationExperiment implements Experiment {
                 })
                 .subscribe(new LoggingSubscriber());
 
+        System.in.read();
+    }
+
+    @Test
+    public void zipWithTest() {
         List<String> words = Arrays.asList("the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog");
 
         Flowable.fromIterable(words)
@@ -88,32 +102,7 @@ public class StreamCreationExperiment implements Experiment {
     }
 
     private Integer getRandomValue() {
-        TimeUtils.sleep(3000);
         LogUtils.log("new random value requested");
         return new Random().nextInt();
-    }
-
-    private static final class LoggingSubscriber implements Subscriber<Object> {
-
-        @Override
-        public void onSubscribe(Subscription subscription) {
-            LogUtils.log("onSubscribe");
-            subscription.request(Long.MAX_VALUE);
-        }
-
-        @Override
-        public void onNext(Object value) {
-            LogUtils.log("value: " + value);
-        }
-
-        @Override
-        public void onError(Throwable throwable) {
-            LogUtils.log("error: " + throwable.getMessage());
-        }
-
-        @Override
-        public void onComplete() {
-            LogUtils.log("onComplete");
-        }
     }
 }

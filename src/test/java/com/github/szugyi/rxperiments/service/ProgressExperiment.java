@@ -1,23 +1,26 @@
-package com.github.szugyi.rxperiments.experiment;
+package com.github.szugyi.rxperiments.service;
 
 import com.github.szugyi.rxperiments.utils.SchedulerUtils;
+import org.junit.Test;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 
-public class ProgressExperiment implements Experiment {
+public class ProgressExperiment extends BaseExperiment {
 
-    @Override
-    public void run() {
+    @Test
+    public void progressExperiment() throws Exception {
         service.getStringWithProgress()
                 .compose(SchedulerUtils.applySchedulers())
                 .doOnNext(pair -> {
                     int progress = pair.getKey();
-                    if(progress != -1){
+                    if (progress != -1) {
                         log("Progress update: " + progress);
-                    }else{
+                    } else {
                         log("Result: " + pair.getValue());
                     }
                 })
                 .subscribe();
+
+        System.in.read();
     }
 }

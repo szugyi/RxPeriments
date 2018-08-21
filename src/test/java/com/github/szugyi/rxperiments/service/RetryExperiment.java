@@ -1,18 +1,16 @@
-package com.github.szugyi.rxperiments.experiment;
+package com.github.szugyi.rxperiments.service;
 
-import com.github.szugyi.rxperiments.service.SampleApi;
 import com.github.szugyi.rxperiments.utils.LogUtils;
 import io.reactivex.Flowable;
+import org.junit.Test;
 
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
-public class RetryExperiment implements Experiment {
+public class RetryExperiment extends BaseExperiment {
 
-    private final SampleApi apiClient = new SampleApi();
-
-    @Override
-    public void run() {
+    @Test
+    public void retryExperiment() throws Exception {
         apiClient.uploadAvatarError()
             .retryWhen(errors ->
                 errors
@@ -29,5 +27,7 @@ public class RetryExperiment implements Experiment {
                     .flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS)))
             .subscribe(() -> LogUtils.log("Upload completed"),
                 throwable -> LogUtils.log("Upload error: " + throwable.getClass()));
+
+        System.in.read();
     }
 }

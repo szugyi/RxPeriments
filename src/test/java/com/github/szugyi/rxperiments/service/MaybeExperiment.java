@@ -1,14 +1,14 @@
-package com.github.szugyi.rxperiments.experiment;
+package com.github.szugyi.rxperiments.service;
 
+import com.github.szugyi.rxperiments.experiment.Experiment;
 import com.github.szugyi.rxperiments.service.SampleApi;
 import com.github.szugyi.rxperiments.utils.LogUtils;
+import org.junit.Test;
 
-public class MaybeExperiment implements Experiment {
+public class MaybeExperiment extends BaseExperiment {
 
-    private final SampleApi apiClient = new SampleApi();
-
-    @Override
-    public void run() {
+    @Test
+    public void maybeExperiment() {
         apiClient.getAvatar()
                 .subscribe(avatar -> {
                     // Avatar is set and has been retrieved successfully

@@ -1,39 +1,38 @@
-package com.github.szugyi.rxperiments.experiment;
+package com.github.szugyi.rxperiments.service;
 
 import com.github.szugyi.rxperiments.utils.TimeUtils;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.schedulers.TestScheduler;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class MapExperiment implements Experiment {
+public class MapExperiment extends BaseExperiment {
 
-    @Override
-    public void run() {
+    @Test
+    public void flatMapExperiment() throws Exception {
+        final List<String> items = Arrays.asList("a", "b", "c", "d", "e", "f");
 
-        switchMap();
-//        final List<String> items = Arrays.asList("a", "b", "c", "d", "e", "f");
-//
-//        Flowable.fromIterable(items)
-//                .switchMap(s -> {
-//                    final int delay = new Random().nextInt(10);
-//                    return Flowable.just(s + "x")
-//                            .delay(delay, TimeUnit.SECONDS, Schedulers.computation())
-//                            .doOnNext(value -> TimeUtils.log(value + ", delay: " + delay));
-//                })
-//                .toList()
-//                .doOnSubscribe(disposable -> TimeUtils.log("Start"))
-//                .doOnSuccess(list -> TimeUtils.log(list.toString()))
-//                .subscribe();
+        Flowable.fromIterable(items)
+                .flatMap(s -> {
+                    final int delay = new Random().nextInt(10);
+                    return Flowable.just(s + "x")
+                            .delay(delay, TimeUnit.SECONDS, Schedulers.computation())
+                            .doOnNext(value -> TimeUtils.log(value + ", delay: " + delay));
+                })
+                .toList()
+                .doOnSubscribe(disposable -> TimeUtils.log("Start"))
+                .doOnSuccess(list -> TimeUtils.log(list.toString()))
+                .subscribe();
+
+        System.in.read();
     }
 
-    private void switchMap() {
-
-
+    @Test
+    public void switchMapExperiment() throws Exception {
         Flowable.intervalRange(1, 5, 0, 5, TimeUnit.SECONDS)
                 .switchMap(s -> {
                     final int delay = new Random().nextInt(10);
@@ -46,7 +45,7 @@ public class MapExperiment implements Experiment {
                 .toList()
                 .subscribe(System.out::println);
 
-
+        System.in.read();
     }
 
     private Flowable<String> getStringDelayed(String s) {

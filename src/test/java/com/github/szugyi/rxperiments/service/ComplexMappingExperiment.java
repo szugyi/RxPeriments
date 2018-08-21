@@ -1,6 +1,7 @@
-package com.github.szugyi.rxperiments.experiment;
+package com.github.szugyi.rxperiments.service;
 
 import io.reactivex.Flowable;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +9,10 @@ import java.util.List;
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
 import static com.github.szugyi.rxperiments.utils.SchedulerUtils.applySchedulers;
 
-public class ComplexMappingExperiment implements Experiment {
+public class ComplexMappingExperiment extends BaseExperiment {
 
-    @Override
-    public void run() {
+    @Test
+    public void complexMappingExperiment() throws Exception {
         Flowable.fromIterable(createData())
                 .compose(applySchedulers())
                 .flatMap(a ->
@@ -23,6 +24,8 @@ public class ComplexMappingExperiment implements Experiment {
                 .subscribe(d -> {
                     log("Result came from: " + d);
                 });
+
+        System.in.read();
     }
 
     private List<A> createData() {
