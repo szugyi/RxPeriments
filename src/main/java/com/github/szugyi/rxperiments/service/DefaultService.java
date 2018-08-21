@@ -77,7 +77,7 @@ public class DefaultService implements Service {
     public Flowable<String> getThreadName() {
         return Flowable.create(subscriber -> {
             String threadName = Thread.currentThread().getName();
-            log("Observable run on: " + threadName);
+            log("Flowable run on: " + threadName);
             subscriber.onNext(threadName);
             subscriber.onComplete();
         }, BackpressureStrategy.MISSING);

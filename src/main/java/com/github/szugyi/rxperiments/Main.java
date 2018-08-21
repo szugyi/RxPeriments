@@ -6,7 +6,7 @@ import io.reactivex.plugins.RxJavaPlugins;
 import java.io.IOException;
 
 public class Main {
-    private static Experiment experiment = new RetryExperiment();
+    private static Experiment experiment = new SchedulerExperiment();
 
     public static void main(String[] args) throws IOException {
         System.out.println();
