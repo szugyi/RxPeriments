@@ -1,5 +1,6 @@
 package com.github.szugyi.rxperiments.service;
 
+import com.github.szugyi.rxperiments.utils.LogUtils;
 import io.reactivex.plugins.RxJavaPlugins;
 import org.junit.Before;
 
@@ -10,6 +11,7 @@ abstract class BaseExperiment {
     @Before
     public void setup() {
         RxJavaPlugins.setErrorHandler(e -> {
+            LogUtils.log("global:" + e.getMessage());
         });
     }
 }

@@ -1,5 +1,6 @@
 package com.github.szugyi.rxperiments.service;
 
+import com.github.szugyi.rxperiments.utils.TimeUtils;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -76,6 +77,7 @@ public class DefaultService implements Service {
     @Override
     public Flowable<String> getThreadName() {
         return Flowable.create(subscriber -> {
+            TimeUtils.sleep(500);
             String threadName = Thread.currentThread().getName();
             log("Flowable run on: " + threadName);
             subscriber.onNext(threadName);

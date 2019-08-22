@@ -14,12 +14,12 @@ public class BackpressureExperiment extends BaseExperiment {
     public void backpressureExperiment() throws Exception {
         Observable.interval(10, TimeUnit.MILLISECONDS)
                 .doOnNext(interval -> LogUtils.log("interval: " + interval))
-                .toFlowable(BackpressureStrategy.DROP)
+                .toFlowable(BackpressureStrategy.LATEST)
                 .observeOn(Schedulers.single(), false, 1)
                 .subscribe(value -> {
                     LogUtils.log("value: " + value);
                     Thread.sleep(50);
-                });
+                }, Throwable::printStackTrace);
 
         System.in.read();
     }

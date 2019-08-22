@@ -1,6 +1,5 @@
 package com.github.szugyi.rxperiments.service;
 
-import com.github.szugyi.rxperiments.experiment.Experiment;
 import com.github.szugyi.rxperiments.service.SampleApi;
 import com.github.szugyi.rxperiments.utils.LogUtils;
 import org.junit.Test;

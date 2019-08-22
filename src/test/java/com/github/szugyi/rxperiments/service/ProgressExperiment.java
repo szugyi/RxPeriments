@@ -1,6 +1,7 @@
 package com.github.szugyi.rxperiments.service;
 
 import com.github.szugyi.rxperiments.utils.SchedulerUtils;
+import io.reactivex.subjects.ReplaySubject;
 import org.junit.Test;
 
 import static com.github.szugyi.rxperiments.utils.LogUtils.log;
